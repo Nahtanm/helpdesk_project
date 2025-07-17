@@ -1,6 +1,10 @@
 package com.dev_santos.helpdesk.resources;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,4 +28,13 @@ public class TecnicoResources {
 		return ResponseEntity.ok().body(new TecnicoDTO(entity));
 	}
 	
-}
+	@GetMapping
+	public ResponseEntity<List<TecnicoDTO>> findAll(){
+		List<TecnicoDTO> tecnicosList = services.findAll()
+				.stream()
+				.map(x -> new TecnicoDTO(x))
+				.collect(Collectors.toList());
+		return ResponseEntity.status(HttpStatus.OK).body(tecnicosList);
+	}
+	
+} 
