@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -35,6 +37,11 @@ public class TecnicoResources {
 				.map(x -> new TecnicoDTO(x))
 				.collect(Collectors.toList());
 		return ResponseEntity.status(HttpStatus.OK).body(tecnicosList);
+	}
+	
+	@PostMapping
+	public ResponseEntity<TecnicoDTO> create(@RequestBody Tecnico tecnico){
+		return ResponseEntity.status(HttpStatus.CREATED).body(new TecnicoDTO(services.create(tecnico)));
 	}
 	
 } 
