@@ -1,5 +1,6 @@
 package com.dev_santos.helpdesk.resources;
 
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.dev_santos.helpdesk.domain.Tecnico;
 import com.dev_santos.helpdesk.domain.dtos.TecnicoDTO;
@@ -40,8 +42,10 @@ public class TecnicoResources {
 	}
 	
 	@PostMapping
-	public ResponseEntity<TecnicoDTO> create(@RequestBody Tecnico tecnico){
-		return ResponseEntity.status(HttpStatus.CREATED).body(new TecnicoDTO(services.create(tecnico)));
+	public ResponseEntity<Tecnico> create(@RequestBody Tecnico tecnico){
+		services.create(tecnico);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("{/id}").buildAndExpand(tecnico.getId()).toUri();
+		return ResponseEntity.created(uri).build();
 	}
 	
 } 
