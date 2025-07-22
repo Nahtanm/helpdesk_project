@@ -18,6 +18,8 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.validation.constraints.NotNull;
 
 @Entity(name = "tb_pessoa")
 public abstract class Pessoa implements Serializable{
@@ -27,17 +29,23 @@ public abstract class Pessoa implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	
+	@NotNull(message = "Campo NOME requerido!")
 	private String nome;
 	
 	@Column(unique = true)
+	@NotNull(message = "Campo CPF requerido!")
 	private String cpf;
 	
 	@Column(unique = true)
+	@NotNull(message = "Campo EMAIL requerido!")
 	private String email;
+	
+	@NotNull(message = "Campo SENHA requerido!")
 	private String senha;
 	
 	@ElementCollection(fetch = FetchType.EAGER)
-	@CollectionTable(name = "tb_perfis")
+	@CollectionTable(name = "tb_perfis", joinColumns = @JoinColumn(name = "id_pessoa"))
 	private Set<Integer> perfis = new HashSet<>();
 	
 	@JsonFormat(pattern = "dd/MM/yyyy")

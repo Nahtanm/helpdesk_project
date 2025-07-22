@@ -34,17 +34,16 @@ public class TecnicoServices {
 	public Tecnico create(Tecnico tecnico) {
 		validarCpfEmail(tecnico);
 		return repository.save(tecnico);
-
 	}
 
-	private void validarCpfEmail(Tecnico tecnico) throws RuntimeException{
+	private void validarCpfEmail(Tecnico tecnico) throws RuntimeException {
 		Optional<Pessoa> entity = pessoaRepository.findByCpf(tecnico.getCpf());
-		if(entity.isPresent() && entity.get().getId() != tecnico.getId()) {
+		if (entity.isPresent() && entity.get().getId() != tecnico.getId()) {
 			throw new DataIntegrityViolationException("CPF já cadastrado no sistema!");
 		}
-		
+
 		entity = pessoaRepository.findByEmail(tecnico.getEmail());
-		if(entity.isPresent() && entity.get().getId() != tecnico.getId()) {
+		if (entity.isPresent() && entity.get().getId() != tecnico.getId()) {
 			throw new DataIntegrityViolationException("E-mail já cadastrado no sistema!");
 		}
 	}
