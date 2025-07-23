@@ -22,32 +22,32 @@ import jakarta.persistence.JoinColumn;
 import jakarta.validation.constraints.NotNull;
 
 @Entity(name = "tb_pessoa")
-public abstract class Pessoa implements Serializable{
+public abstract class Pessoa implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	
+
 	@NotNull(message = "Campo NOME requerido!")
 	private String nome;
-	
+
 	@Column(unique = true)
 	@NotNull(message = "Campo CPF requerido!")
 	private String cpf;
-	
+
 	@Column(unique = true)
 	@NotNull(message = "Campo EMAIL requerido!")
 	private String email;
-	
+
 	@NotNull(message = "Campo SENHA requerido!")
 	private String senha;
-	
+
 	@ElementCollection(fetch = FetchType.EAGER)
 	@CollectionTable(name = "tb_perfis", joinColumns = @JoinColumn(name = "id_pessoa"))
 	private Set<Integer> perfis = new HashSet<>();
-	
+
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate dataCriacao = LocalDate.now();
 
@@ -107,7 +107,7 @@ public abstract class Pessoa implements Serializable{
 	public Set<Perfil> getPerfil() {
 		return perfis.stream().map(x -> Perfil.toEnum(x)).collect(Collectors.toSet());
 	}
-	
+
 	public void addPerfil(Perfil perfil) {
 		this.perfis.add(perfil.getCodigo());
 	}
@@ -119,7 +119,7 @@ public abstract class Pessoa implements Serializable{
 	public void setDataCriacao(LocalDate dataCriacao) {
 		this.dataCriacao = dataCriacao;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);

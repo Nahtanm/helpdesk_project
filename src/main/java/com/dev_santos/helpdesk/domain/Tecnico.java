@@ -3,6 +3,10 @@ package com.dev_santos.helpdesk.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.BeanUtils;
+
+import com.dev_santos.helpdesk.domain.dtos.TecnicoDTO;
+import com.dev_santos.helpdesk.domain.enums.Perfil;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
@@ -19,6 +23,13 @@ public class Tecnico extends Pessoa {
 
 	public Tecnico() {
 		super();
+	}
+	
+	public Tecnico(TecnicoDTO objDTO) {
+		BeanUtils.copyProperties(objDTO, this);
+		for(Perfil x : objDTO.getPerfis()) {
+			addPerfil(x);
+		}
 	}
 
 	public Tecnico(Integer id, String nome, String cpf, String email, String senha) {

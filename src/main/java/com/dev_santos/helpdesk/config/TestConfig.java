@@ -28,14 +28,14 @@ public class TestConfig implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		Tecnico tec1 = new Tecnico(null, "Nahtanm Carvalho", "09876543200", "Nahtanm@gmail.com", "123456");
+		Tecnico tec1 = new Tecnico(null, "Nahtanm Carvalho", "123.456.070-56", "Nahtanm@gmail.com", "123456");
 		tec1.addPerfil(Perfil.ADMIN);
 		Tecnico tec2 = new Tecnico(null, "Richard Stallman", "903.347.070-56", "stallman@mail.com", "1111");
 		Tecnico tec3 = new Tecnico(null, "Claude Elwood Shannon", "271.068.470-54", "shannon@mail.com", "1111");
 		Tecnico tec4 = new Tecnico(null, "Tim Berners-Lee", "162.720.120-39", "lee@mail.com", "1111");
 		Tecnico tec5 = new Tecnico(null, "Linus Torvalds", "778.556.170-27", "linus@mail.com", "1111");
 
-		Cliente cli1 = new Cliente(null, "Mike brown", "27192837189", "mike@gmail.com", "027312");
+		Cliente cli1 = new Cliente(null, "Mike brown", "321.654.070-56", "mike@gmail.com", "027312");
 		Cliente cli2 = new Cliente(null, "Marie Curie", "322.429.140-06", "curie@mail.com", "1111");
 		Cliente cli3 = new Cliente(null, "Charles Darwin", "792.043.830-62", "darwin@mail.com", "1111");
 		Cliente cli4 = new Cliente(null, "Stephen Hawking", "177.409.680-30", "hawking@mail.com", "1111");

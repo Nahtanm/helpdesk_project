@@ -8,10 +8,12 @@ import org.springframework.stereotype.Service;
 
 import com.dev_santos.helpdesk.domain.Pessoa;
 import com.dev_santos.helpdesk.domain.Tecnico;
+import com.dev_santos.helpdesk.domain.dtos.TecnicoDTO;
 import com.dev_santos.helpdesk.repositories.PessoaRepository;
 import com.dev_santos.helpdesk.repositories.TecnicoRepository;
 import com.dev_santos.helpdesk.services.exceptions.DataIntegrityViolationException;
 import com.dev_santos.helpdesk.services.exceptions.ObjectNotFoundException;
+
 
 @Service
 public class TecnicoServices {
@@ -31,12 +33,19 @@ public class TecnicoServices {
 		return repository.findAll();
 	}
 
-	public Tecnico create(Tecnico tecnico) {
+	public Tecnico create(TecnicoDTO tecnico) {
 		validarCpfEmail(tecnico);
-		return repository.save(tecnico);
+		return repository.save(new Tecnico(tecnico));
 	}
 
-	private void validarCpfEmail(Tecnico tecnico) throws RuntimeException {
+	public Tecnico update(TecnicoDTO tecnico, Integer id) {
+		tecnico.setId(id);
+		Tecnico entity = findById(id);
+		entity = new Tecnico(tecnico);
+		return repository.save(entity);
+	}
+
+	private void validarCpfEmail(TecnicoDTO tecnico){
 		Optional<Pessoa> entity = pessoaRepository.findByCpf(tecnico.getCpf());
 		if (entity.isPresent() && entity.get().getId() != tecnico.getId()) {
 			throw new DataIntegrityViolationException("CPF já cadastrado no sistema!");
