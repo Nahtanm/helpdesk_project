@@ -3,6 +3,9 @@ package com.dev_santos.helpdesk.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.BeanUtils;
+
+import com.dev_santos.helpdesk.domain.dtos.ClienteDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
@@ -23,6 +26,11 @@ public class Cliente extends Pessoa {
 
 	public Cliente(Integer id, String nome, String cpf, String email, String senha) {
 		super(id, nome, cpf, email, senha);
+	}
+	
+	public Cliente(ClienteDTO clienteDTO) {
+		BeanUtils.copyProperties(clienteDTO, this);
+		clienteDTO.getPerfis().stream().forEach(x -> addPerfil(x));
 	}
 	
 	public void addChamados(Chamado chamado) {
