@@ -7,6 +7,8 @@ import com.dev_santos.helpdesk.domain.Chamado;
 import com.dev_santos.helpdesk.domain.enums.Status;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import jakarta.validation.constraints.NotNull;
+
 public class ChamadoDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -16,10 +18,16 @@ public class ChamadoDTO implements Serializable {
 	private LocalDate dataAbertura = LocalDate.now();
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate dataFechamento;
+	
+	@NotNull(message = "O campo PRIORIDADE é requerido")
 	private Integer prioridade;
+	@NotNull(message = "O campo STATUS é requerido")
 	private Status status;
+	@NotNull(message = "O campo TÍTULO é requerido")
 	private String titulo;
+	@NotNull(message = "O campo OBSERVAÇÕES é requerido")
 	private String observacoes;
+	
 	private Integer idCliente;
 	private Integer idTecnico;
 	private String nomeTecnico;

@@ -38,10 +38,10 @@ public class TecnicoServices {
 		return repository.save(new Tecnico(tecnico));
 	}
 
-	public Tecnico update(TecnicoDTO tecnico, Integer id) {
-		tecnico.setId(id);
+	public Tecnico update(TecnicoDTO tecnicoDTO, Integer id) {
+		tecnicoDTO.setId(id);
 		Tecnico entity = findById(id);
-		entity = new Tecnico(tecnico);
+		entity = new Tecnico(tecnicoDTO);
 		return repository.save(entity);
 	}
 
