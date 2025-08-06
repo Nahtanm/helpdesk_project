@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 import com.dev_santos.helpdesk.domain.Chamado;
+import com.dev_santos.helpdesk.domain.enums.Prioridade;
 import com.dev_santos.helpdesk.domain.enums.Status;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -22,7 +23,7 @@ public class ChamadoDTO implements Serializable {
 	@NotNull(message = "O campo PRIORIDADE é requerido")
 	private Integer prioridade;
 	@NotNull(message = "O campo STATUS é requerido")
-	private Status status;
+	private Integer status;
 	@NotNull(message = "O campo TÍTULO é requerido")
 	private String titulo;
 	@NotNull(message = "O campo OBSERVAÇÕES é requerido")
@@ -42,7 +43,7 @@ public class ChamadoDTO implements Serializable {
 		this.dataAbertura = chamado.getDataAbertura();
 		this.dataFechamento = chamado.getDataFechamento();
 		this.prioridade = chamado.getPrioridade().getCodigo();
-		this.status = chamado.getStatus();
+		this.status = chamado.getStatus().getCodigo();
 		this.titulo = chamado.getTitulo();
 		this.observacoes = chamado.getObservacoes();
 		this.idCliente = chamado.getCliente().getId();
@@ -75,8 +76,8 @@ public class ChamadoDTO implements Serializable {
 		this.dataFechamento = dataFechamento;
 	}
 
-	public Integer getPrioridade() {
-		return prioridade;
+	public Prioridade getPrioridade() {
+		return Prioridade.toEnum(prioridade);
 	}
 
 	public void setPrioridade(Integer prioridade) {
@@ -84,10 +85,10 @@ public class ChamadoDTO implements Serializable {
 	}
 
 	public Status getStatus() {
-		return status;
+		return Status.toEnum(status);
 	}
 
-	public void setStatus(Status status) {
+	public void setStatus(Integer status) {
 		this.status = status;
 	}
 

@@ -1,5 +1,6 @@
 package com.dev_santos.helpdesk.services;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,6 @@ import com.dev_santos.helpdesk.domain.Chamado;
 import com.dev_santos.helpdesk.domain.Cliente;
 import com.dev_santos.helpdesk.domain.Tecnico;
 import com.dev_santos.helpdesk.domain.dtos.ChamadoDTO;
-import com.dev_santos.helpdesk.domain.enums.Prioridade;
 import com.dev_santos.helpdesk.repositories.ChamadoRepository;
 import com.dev_santos.helpdesk.services.exceptions.ObjectNotFoundException;
 
@@ -37,6 +37,13 @@ public class ChamadoServices {
 		return chamadoRepository.save(createChamado(chamadoDTO));
 	}
 	
+	public Chamado update(Integer id, ChamadoDTO chamadoDTO) {
+		chamadoDTO.setId(id);
+		Chamado chamadoAntigo = findById(id);
+		chamadoAntigo = createChamado(chamadoDTO);
+		return chamadoRepository.save(chamadoAntigo);
+	}
+	
 	public Chamado createChamado(ChamadoDTO chamadoDTO) {
 		Tecnico tecnico = tecnicoServices.findById(chamadoDTO.getIdTecnico());
 		Cliente cliente = clienteServices.findByid(chamadoDTO.getIdCliente());
@@ -47,7 +54,11 @@ public class ChamadoServices {
 			chamado.setId(chamadoDTO.getId());
 		}
 		
-		chamado.setPrioridade(Prioridade.toEnum(chamadoDTO.getPrioridade()));
+		if(chamadoDTO.getStatus().getCodigo().equals(3)) {
+			chamado.setDataFechamento(LocalDate.now());
+		}
+		
+		chamado.setPrioridade(chamadoDTO.getPrioridade());
 		chamado.setStatus(chamadoDTO.getStatus());
 		chamado.setTitulo(chamadoDTO.getTitulo());
 		chamado.setObservacoes(chamadoDTO.getObservacoes());
